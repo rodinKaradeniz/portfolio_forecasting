@@ -6,6 +6,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
+    # TODO: initialize DB
+
     # return render_template("home.html")
     return 'Welcome to the Portfolio Forecasting API!'
 
