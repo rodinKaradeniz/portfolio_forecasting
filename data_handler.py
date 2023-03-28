@@ -24,7 +24,7 @@ def get_stock_history(ticker, save_to_db=False):
 
     if save_to_db:
         # Save to the database
-        db_name = "stock_data.db"
+        db_name = "{ticker}_stock_data.db"
         upload_to_sql(db_name, df)
 
     return df

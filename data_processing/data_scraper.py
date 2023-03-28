@@ -66,5 +66,6 @@ def scrape_history(ticker: str, debug=False):
     
 
 if __name__ == "__main__":
+    # Testing
     ticker = "AMZN"
     scrape_summary(ticker, debug=True)

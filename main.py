@@ -7,9 +7,8 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     # TODO: initialize DB
-
     # return render_template("home.html")
-    return 'Welcome to the Portfolio Forecasting API!'
+    return 'Welcome to the Stock Forecasting API!'
 
 @app.route('/getStockSummary/<ticker>', methods=['GET'])
 def get_stock_summary(ticker):
