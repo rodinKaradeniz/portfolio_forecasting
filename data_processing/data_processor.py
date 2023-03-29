@@ -51,9 +51,17 @@ def refactor_dataframe(df: pd.DataFrame, ticker: str) -> pd.DataFrame:
 
     return df
 
-def upload_to_sql(db_name: str, df: pd.DataFrame, debug=False):
-    # Connect to the database
-    conn = sqlite3.connect(f"{db_name}.db")
+
+def upload_to_sql(ticker: str, df: pd.DataFrame, debug=False):
+    # Check if database exists
+    db_name = f"./data/{ticker}.db"
+    if os.path.isfile(db_name):
+        conn = sqlite3.connect(db_name)
+    else:
+        # TODO: initialize db_name
+
+        raise Exception("Database does not exist")
+
     columns = [
         "ticker TEXT",
         "date FLOAT",
@@ -64,7 +72,6 @@ def upload_to_sql(db_name: str, df: pd.DataFrame, debug=False):
         "adj_close FLOAT",
         "volume INT"
     ]
-
     create_table_cmd = f"CREATE TABLE IF NOT EXISTS stock ({','.join(columns)})"
     conn.execute(create_table_cmd)
 
@@ -79,16 +86,26 @@ def upload_to_sql(db_name: str, df: pd.DataFrame, debug=False):
     conn.commit()
     conn.close()
 
-def etl(ticker: str, db_name: str, debug=False):
-    df = pd.read_csv(f'./history_data_raw/{ticker}.csv')
+
+def etl(ticker: str, db_name: str, to_db=False, debug=False):
+    df = pd.read_csv(f'./data/history_data_raw/{ticker}.csv')
     df = refactor_dataframe(df)
 
-    # TODO: Handle the directory adjustment for database creation/update.
-    # if os.path.isfile(f"../{db_name}.db"):
-    #     upload_to_sql(db_name, df, debug)
-    # else:
-    #     raise Exception("Database does not exist")
-    return
+    if to_db:
+        upload_to_sql(ticker, df, debug)
+
+    if debug:
+        print("Extracting csv...")
+
+    csv_name = f'./data/history_data/{ticker}.csv'
+    df.to_csv(csv_name)
+
+    if debug:
+        if os.path.isfile(csv_name):
+            print("Extracted csv.")
+        else:
+            print("Extraction failed.")
+
 
 def load_from_sql(ticker: str, debug=False):
     db_name = f"{ticker}_stock_history.db"
