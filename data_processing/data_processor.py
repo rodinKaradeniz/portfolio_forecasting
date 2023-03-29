@@ -89,3 +89,16 @@ def etl(ticker: str, db_name: str, debug=False):
     # else:
     #     raise Exception("Database does not exist")
     return
+
+def load_from_sql(ticker: str, debug=False):
+    db_name = f"{ticker}_stock_history.db"
+
+    if os.path.isfile(f"../{db_name}.db"):
+        if debug:
+            print("Loading data from database...")
+
+        conn = sqlite3.connect(f"{db_name}.db")
+
+        # TODO: Load Data
+    else:
+        raise Exception("Database does not exist")
