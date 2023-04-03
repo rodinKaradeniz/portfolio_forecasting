@@ -1,1 +1,1 @@
-# portfolio_forecasting
+# stock_forecasting
