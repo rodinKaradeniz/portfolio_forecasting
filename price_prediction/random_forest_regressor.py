@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 # Collect and clean data
 ticker = "AAPL"
-df = pd.read_csv(f'./data/{ticker}.csv')
+df = pd.read_csv(f'./data/history_data/{ticker}.csv')
 
 # # Visualization
 # df.plot(x='Date', y='Close')
