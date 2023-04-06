@@ -1,0 +1,5 @@
+User Stories:
+    - User opens the API, asks for stock summary.
+    - User asks for stock's history data.
+    - User asks for stock's predicted closing price for tomorrow.
+    - User asks for stock's predicted trend for the upcoming days.
