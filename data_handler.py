@@ -4,7 +4,7 @@ import os
 import pandas as pd
 
 def get_stock_summary(ticker):
-    # No need to introduce easy saving or caching here - this is momentary data
+    # No need to introduce saving/caching here - this is momentary data
     return scrape_summary(ticker)
 
 def get_stock_history(ticker, save_to_db=False):
@@ -14,7 +14,10 @@ def get_stock_history(ticker, save_to_db=False):
 
     else:
         # Scrape data from yahoo.com
-        df = scrape_history(ticker)
+        scrape_history(ticker)
+
+        # Retrieve raw data
+        df = pd.read_csv('./data/history_data_raw/{ticker}.csv')
 
         # Clean/Transform data
         df = refactor_dataframe(df)
