@@ -87,26 +87,6 @@ def upload_to_sql(ticker: str, df: pd.DataFrame, debug=False):
     conn.close()
 
 
-def etl(ticker: str, db_name: str, to_db=False, debug=False):
-    df = pd.read_csv(f'./data/history_data_raw/{ticker}.csv')
-    df = refactor_dataframe(df)
-
-    if to_db:
-        upload_to_sql(ticker, df, debug)
-
-    if debug:
-        print("Extracting csv...")
-
-    csv_name = f'./data/history_data/{ticker}.csv'
-    df.to_csv(csv_name)
-
-    if debug:
-        if os.path.isfile(csv_name):
-            print("Extracted csv.")
-        else:
-            print("Extraction failed.")
-
-
 def load_from_sql(ticker: str, debug=False):
     db_name = f"{ticker}_stock_history.db"
 
